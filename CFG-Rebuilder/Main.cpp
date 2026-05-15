@@ -4,7 +4,7 @@
 
 
 int main() {
-     DWORD pid = 0x68C8;  // 你的目标进程 PID
+     DWORD pid = 0x5070;
      HANDLE h = OpenProcess(PROCESS_VM_READ | PROCESS_QUERY_INFORMATION,
           FALSE, pid);
      if (!h) {
@@ -14,7 +14,7 @@ int main() {
 
      CodeLifter lifter(h);
 
-     uintptr_t sub_EE1_addr = 0x7FF70215F3F0;  // 你的目标函数地址
+     uintptr_t sub_EE1_addr = 0x7FF625041BF0;
 
      if (lifter.CollectFunction(sub_EE1_addr)) {
           lifter.DumpResult();

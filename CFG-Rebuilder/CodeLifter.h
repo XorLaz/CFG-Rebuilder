@@ -1,6 +1,4 @@
-// CodeLifter.h
 #pragma once
-
 #include <Windows.h>
 #include <TlHelp32.h>
 #include <Psapi.h>
@@ -18,25 +16,27 @@ public:
      CodeLifter(const CodeLifter&) = delete;
      CodeLifter& operator=(const CodeLifter&) = delete;
 
-     // 阶段 1 主入口
+
      bool CollectFunction(uintptr_t targetFuncAddr);
 
-     // 打印结果
      void DumpResult() const;
 
 public:
      HANDLE m_hTargetProcess;
 
-     // 本地代码区
+     // 本地
      uint8_t* m_codeArenaBase;
      size_t   m_codeArenaCapacity;
      size_t   m_codeArenaUsed;
 
-     // 已搬函数 / 镜像变量 / 间接调用槽
-     std::unordered_map<uintptr_t, void*>  m_liftedFunctions;
-     std::unordered_map<uintptr_t, size_t> m_functionSizes;
-     std::unordered_map<uintptr_t, void*>  m_mirrorVariables;
-     std::unordered_map<uintptr_t, void*>  m_indirectCallSlots;
+     struct LiftedFunction {
+          void* localAddress;   // 本地地址
+          size_t size;           // 函数大小
+     };
+
+     std::unordered_map<uintptr_t, LiftedFunction> m_liftedFunctions;   // 已搬函数
+     std::unordered_map<uintptr_t, void*>  m_mirrorVariables;  // 镜像变量
+     std::unordered_map<uintptr_t, void*>  m_indirectCallSlots;  //  间接调用槽
 
      // 目标进程模块列表
      struct TargetModule {

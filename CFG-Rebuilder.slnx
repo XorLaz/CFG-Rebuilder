@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="CFG-Rebuilder/CFG-Rebuilder.vcxproj" />
+  <Project Path="CFG-Rebuilder/CFG-Rebuilder.vcxproj" Id="84559eee-8cdb-4aaa-a6d0-73db72168bb4" />
 </Solution>

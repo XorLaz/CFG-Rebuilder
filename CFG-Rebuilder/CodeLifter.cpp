@@ -395,7 +395,6 @@ void CodeLifter::CollectRecursive(uintptr_t addr, int depth)
 
      if (m_liftedFunctions.count(addr)) return;
 
-     // 确保地址在目标进程里可执行
      if (!IsExecutableInTarget(addr)) {
           printf("[!] Address 0x%llx is not executable in target\n",
                (unsigned long long)addr);
@@ -422,8 +421,8 @@ void CodeLifter::CollectRecursive(uintptr_t addr, int depth)
           return;
      }
 
-     m_liftedFunctions[addr] = localCode;
-     m_functionSizes[addr] = funcSize;
+     // 合并后的注册
+     m_liftedFunctions[addr] = { localCode, funcSize };
 
      printf("[+] Collected 0x%llx -> %p (size=%zu, depth=%d)\n",
           (unsigned long long)addr, localCode, funcSize, depth);
@@ -433,8 +432,7 @@ void CodeLifter::CollectRecursive(uintptr_t addr, int depth)
 
 
 // 扫描指令收集依赖
-void CodeLifter::ScanInstructions(uintptr_t origAddr, void* localCode,
-     size_t funcSize, int depth)
+void CodeLifter::ScanInstructions(uintptr_t origAddr, void* localCode,size_t funcSize, int depth)
 {
      uint8_t* code = (uint8_t*)localCode;
      size_t offset = 0;
@@ -555,10 +553,7 @@ void CodeLifter::EnsureIndirectCallSlot(uintptr_t targetPtrAddr, int depth)
 
 
 // 处理直接控制流目标
-void CodeLifter::HandleControlFlowTarget(uintptr_t target,
-     uintptr_t funcStart,
-     size_t funcSize,
-     int depth)
+void CodeLifter::HandleControlFlowTarget(uintptr_t target,uintptr_t funcStart,size_t funcSize,int depth)
 {
      // 函数内跳转
      if (target >= funcStart && target < funcStart + funcSize) return;
@@ -581,10 +576,10 @@ void CodeLifter::DumpResult() const
 
      printf("Lifted functions: %zu\n", m_liftedFunctions.size());
      for (const auto& kv : m_liftedFunctions) {
-          auto it = m_functionSizes.find(kv.first);
-          size_t sz = (it != m_functionSizes.end()) ? it->second : 0;
           printf("  0x%llx -> %p (size=%zu)\n",
-               (unsigned long long)kv.first, kv.second, sz);
+               (unsigned long long)kv.first,
+               kv.second.localAddress,
+               kv.second.size);
      }
 
      printf("\nMirror variables: %zu\n", m_mirrorVariables.size());
@@ -615,7 +610,8 @@ void CodeLifter::DumpResult() const
                for (const char* t : TRUSTED_SHARED_MODULES) {
                     if (moduleName == std::string(t)) {
                          HMODULE h = GetModuleHandleA(t);
-                         if (h && (uintptr_t)h == FindTargetModule(actualFunc)->base) {
+                         auto* foundMod = FindTargetModule(actualFunc);
+                         if (h && foundMod && (uintptr_t)h == foundMod->base) {
                               shared = true;
                          }
                          break;
