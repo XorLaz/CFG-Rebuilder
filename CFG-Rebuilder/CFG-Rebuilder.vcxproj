@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>18.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{84559eee-8cdb-4aaa-a6d0-73db72168bb4}</ProjectGuid>
+    <RootNamespace>CFGRebuilder</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)Builds\</OutDir>
+    <IntDir>$(SolutionDir)Builds\intermediary\</IntDir>
+    <IncludePath>C:\Users\XorLaz\Desktop\CFG-Rebuilder\CFG-Rebuilder;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\Users\XorLaz\Desktop\CFG-Rebuilder\CFG-Rebuilder;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)Debug\</OutDir>
+    <IntDir>$(SolutionDir)Debug\intermediary\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;ZYCORE_STATIC_BUILD;ZYDIS_STATIC_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;ZYCORE_STATIC_BUILD;ZYDIS_STATIC_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="CodeLifter.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Zycore\Allocator.c" />
+    <ClCompile Include="Zycore\API\Memory.c" />
+    <ClCompile Include="Zycore\API\Process.c" />
+    <ClCompile Include="Zycore\API\Synchronization.c" />
+    <ClCompile Include="Zycore\API\Terminal.c" />
+    <ClCompile Include="Zycore\API\Thread.c" />
+    <ClCompile Include="Zycore\ArgParse.c" />
+    <ClCompile Include="Zycore\Bitset.c" />
+    <ClCompile Include="Zycore\Format.c" />
+    <ClCompile Include="Zycore\List.c" />
+    <ClCompile Include="Zycore\Vector.c" />
+    <ClCompile Include="Zycore\Zycore.c" />
+    <ClCompile Include="Zycore\ZycoreString.c" />
+    <ClCompile Include="Zydis\Decoder.c" />
+    <ClCompile Include="Zydis\DecoderData.c" />
+    <ClCompile Include="Zydis\Disassembler.c" />
+    <ClCompile Include="Zydis\Encoder.c" />
+    <ClCompile Include="Zydis\EncoderData.c" />
+    <ClCompile Include="Zydis\Formatter.c" />
+    <ClCompile Include="Zydis\FormatterATT.c" />
+    <ClCompile Include="Zydis\FormatterBase.c" />
+    <ClCompile Include="Zydis\FormatterBuffer.c" />
+    <ClCompile Include="Zydis\FormatterIntel.c" />
+    <ClCompile Include="Zydis\MetaInfo.c" />
+    <ClCompile Include="Zydis\Mnemonic.c" />
+    <ClCompile Include="Zydis\Register.c" />
+    <ClCompile Include="Zydis\Segment.c" />
+    <ClCompile Include="Zydis\SharedData.c" />
+    <ClCompile Include="Zydis\String.c" />
+    <ClCompile Include="Zydis\Utils.c" />
+    <ClCompile Include="Zydis\Zydis.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CodeLifter.h" />
+    <ClInclude Include="Zycore\Allocator.h" />
+    <ClInclude Include="Zycore\API\Memory.h" />
+    <ClInclude Include="Zycore\API\Process.h" />
+    <ClInclude Include="Zycore\API\Synchronization.h" />
+    <ClInclude Include="Zycore\API\Terminal.h" />
+    <ClInclude Include="Zycore\API\Thread.h" />
+    <ClInclude Include="Zycore\ArgParse.h" />
+    <ClInclude Include="Zycore\Atomic.h" />
+    <ClInclude Include="Zycore\Bitset.h" />
+    <ClInclude Include="Zycore\Comparison.h" />
+    <ClInclude Include="Zycore\Defines.h" />
+    <ClInclude Include="Zycore\Format.h" />
+    <ClInclude Include="Zycore\Internal\AtomicGNU.h" />
+    <ClInclude Include="Zycore\Internal\AtomicMSVC.h" />
+    <ClInclude Include="Zycore\LibC.h" />
+    <ClInclude Include="Zycore\List.h" />
+    <ClInclude Include="Zycore\Object.h" />
+    <ClInclude Include="Zycore\Status.h" />
+    <ClInclude Include="Zycore\Types.h" />
+    <ClInclude Include="Zycore\Vector.h" />
+    <ClInclude Include="Zycore\Zycore.h" />
+    <ClInclude Include="Zycore\ZycoreString.h" />
+    <ClInclude Include="Zydis\Decoder.h" />
+    <ClInclude Include="Zydis\DecoderTypes.h" />
+    <ClInclude Include="Zydis\Defines.h" />
+    <ClInclude Include="Zydis\Disassembler.h" />
+    <ClInclude Include="Zydis\Encoder.h" />
+    <ClInclude Include="Zydis\Formatter.h" />
+    <ClInclude Include="Zydis\FormatterBuffer.h" />
+    <ClInclude Include="Zydis\Generated\EnumInstructionCategory.h" />
+    <ClInclude Include="Zydis\Generated\EnumISAExt.h" />
+    <ClInclude Include="Zydis\Generated\EnumISASet.h" />
+    <ClInclude Include="Zydis\Generated\EnumMnemonic.h" />
+    <ClInclude Include="Zydis\Generated\EnumRegister.h" />
+    <ClInclude Include="Zydis\Internal\DecoderData.h" />
+    <ClInclude Include="Zydis\Internal\EncoderData.h" />
+    <ClInclude Include="Zydis\Internal\FormatterATT.h" />
+    <ClInclude Include="Zydis\Internal\FormatterBase.h" />
+    <ClInclude Include="Zydis\Internal\FormatterIntel.h" />
+    <ClInclude Include="Zydis\Internal\SharedData.h" />
+    <ClInclude Include="Zydis\Internal\String.h" />
+    <ClInclude Include="Zydis\MetaInfo.h" />
+    <ClInclude Include="Zydis\Mnemonic.h" />
+    <ClInclude Include="Zydis\Register.h" />
+    <ClInclude Include="Zydis\Segment.h" />
+    <ClInclude Include="Zydis\SharedTypes.h" />
+    <ClInclude Include="Zydis\ShortString.h" />
+    <ClInclude Include="Zydis\Status.h" />
+    <ClInclude Include="Zydis\Utils.h" />
+    <ClInclude Include="Zydis\Zydis.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Zydis\Generated\AccessedFlags.inc" />
+    <None Include="Zydis\Generated\DecoderTables.inc" />
+    <None Include="Zydis\Generated\EncoderTables.inc" />
+    <None Include="Zydis\Generated\EnumInstructionCategory.inc" />
+    <None Include="Zydis\Generated\EnumISAExt.inc" />
+    <None Include="Zydis\Generated\EnumISASet.inc" />
+    <None Include="Zydis\Generated\EnumMnemonic.inc" />
+    <None Include="Zydis\Generated\EnumRegister.inc" />
+    <None Include="Zydis\Generated\FormatterStrings.inc" />
+    <None Include="Zydis\Generated\GetRelInfo.inc" />
+    <None Include="Zydis\Generated\InstructionDefinitions.inc" />
+    <None Include="Zydis\Generated\InstructionEncodings.inc" />
+    <None Include="Zydis\Generated\OperandDefinitions.inc" />
+    <None Include="Zydis\Generated\RegisterClassLookup.inc" />
+    <None Include="Zydis\Generated\RegisterLookup.inc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

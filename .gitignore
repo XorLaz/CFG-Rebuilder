@@ -1,0 +1,21 @@
+# 编译输出
+x64/
+Debug/
+Release/
+*.obj
+*.pdb
+*.exe
+*.dll
+*.lib
+*.exp
+*.ilk
+*.idb
+*.tlog
+
+Builds/
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.aps

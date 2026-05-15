@@ -1,0 +1,320 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Zycore\API\Memory.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zycore\API\Process.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zycore\API\Synchronization.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zycore\API\Terminal.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zycore\API\Thread.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zycore\Allocator.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zycore\ArgParse.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zycore\Bitset.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zycore\Format.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zycore\List.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zycore\Vector.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zycore\Zycore.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zycore\ZycoreString.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zydis\Decoder.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zydis\DecoderData.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zydis\Disassembler.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zydis\Encoder.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zydis\EncoderData.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zydis\Formatter.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zydis\FormatterATT.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zydis\FormatterBase.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zydis\FormatterBuffer.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zydis\FormatterIntel.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zydis\MetaInfo.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zydis\Mnemonic.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zydis\Register.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zydis\Segment.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zydis\SharedData.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zydis\String.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zydis\Utils.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Zydis\Zydis.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeLifter.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Zycore\API\Memory.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zycore\API\Process.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zycore\API\Synchronization.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zycore\API\Terminal.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zycore\API\Thread.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zycore\Internal\AtomicGNU.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zycore\Internal\AtomicMSVC.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zycore\Allocator.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zycore\ArgParse.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zycore\Atomic.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zycore\Bitset.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zycore\Comparison.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zycore\Defines.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zycore\Format.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zycore\LibC.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zycore\List.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zycore\Object.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zycore\Status.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zycore\Types.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zycore\Vector.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zycore\Zycore.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zycore\ZycoreString.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zydis\Generated\EnumInstructionCategory.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zydis\Generated\EnumISAExt.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zydis\Generated\EnumISASet.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zydis\Generated\EnumMnemonic.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zydis\Generated\EnumRegister.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zydis\Internal\DecoderData.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zydis\Internal\EncoderData.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zydis\Internal\FormatterATT.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zydis\Internal\FormatterBase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zydis\Internal\FormatterIntel.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zydis\Internal\SharedData.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zydis\Internal\String.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zydis\Decoder.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zydis\DecoderTypes.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zydis\Defines.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zydis\Disassembler.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zydis\Encoder.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zydis\Formatter.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zydis\FormatterBuffer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zydis\MetaInfo.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zydis\Mnemonic.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zydis\Register.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zydis\Segment.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zydis\SharedTypes.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zydis\ShortString.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zydis\Status.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zydis\Utils.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Zydis\Zydis.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeLifter.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Zydis\Generated\AccessedFlags.inc">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="Zydis\Generated\DecoderTables.inc">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="Zydis\Generated\EncoderTables.inc">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="Zydis\Generated\EnumInstructionCategory.inc">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="Zydis\Generated\EnumISAExt.inc">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="Zydis\Generated\EnumISASet.inc">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="Zydis\Generated\EnumMnemonic.inc">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="Zydis\Generated\EnumRegister.inc">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="Zydis\Generated\FormatterStrings.inc">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="Zydis\Generated\GetRelInfo.inc">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="Zydis\Generated\InstructionDefinitions.inc">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="Zydis\Generated\InstructionEncodings.inc">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="Zydis\Generated\OperandDefinitions.inc">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="Zydis\Generated\RegisterClassLookup.inc">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="Zydis\Generated\RegisterLookup.inc">
+      <Filter>头文件</Filter>
+    </None>
+  </ItemGroup>
+</Project>
