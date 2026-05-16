@@ -4,7 +4,7 @@
 
 
 int main() {
-     DWORD pid = 0x5070;
+     DWORD pid = 0x2454;
      HANDLE h = OpenProcess(PROCESS_VM_READ | PROCESS_QUERY_INFORMATION,
           FALSE, pid);
      if (!h) {
@@ -14,7 +14,7 @@ int main() {
 
      CodeLifter lifter(h);
 
-     uintptr_t sub_EE1_addr = 0x7FF625041BF0;
+     uintptr_t sub_EE1_addr = 0x7FF73759D5F8;
 
      if (lifter.CollectFunction(sub_EE1_addr)) {
           lifter.DumpResult();
