@@ -114,6 +114,24 @@
     <ClCompile Include="Main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="MemoryAccess.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleResolver.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ArenaAllocator.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FunctionScanner.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Fixer.h">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Fixer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Zycore\API\Memory.h">
@@ -267,6 +285,21 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="CodeLifter.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryAccess.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="driver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleResolver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ArenaAllocator.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FunctionScanner.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

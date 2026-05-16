@@ -130,15 +130,23 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;ZYCORE_STATIC_BUILD;ZYDIS_STATIC_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ArenaAllocator.cpp" />
     <ClCompile Include="CodeLifter.cpp" />
+    <ClCompile Include="Fixer.cpp" />
+    <ClCompile Include="Fixer.h" />
+    <ClCompile Include="FunctionScanner.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MemoryAccess.cpp" />
+    <ClCompile Include="ModuleResolver.cpp" />
     <ClCompile Include="Zycore\Allocator.c" />
     <ClCompile Include="Zycore\API\Memory.c" />
     <ClCompile Include="Zycore\API\Process.c" />
@@ -172,7 +180,12 @@
     <ClCompile Include="Zydis\Zydis.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ArenaAllocator.h" />
     <ClInclude Include="CodeLifter.h" />
+    <ClInclude Include="driver.h" />
+    <ClInclude Include="FunctionScanner.h" />
+    <ClInclude Include="MemoryAccess.h" />
+    <ClInclude Include="ModuleResolver.h" />
     <ClInclude Include="Zycore\Allocator.h" />
     <ClInclude Include="Zycore\API\Memory.h" />
     <ClInclude Include="Zycore\API\Process.h" />
