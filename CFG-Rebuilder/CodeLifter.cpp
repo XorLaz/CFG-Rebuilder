@@ -285,7 +285,7 @@ void CodeLifter::HandleControlFlowTarget(uintptr_t target,
      size_t funcSize,
      int depth)
 {
-     if (target >= funcStart && target <= funcStart + funcSize) return;
+     if (target >= funcStart && target < funcStart + funcSize) return;
      if (m_resolver.IsSharedWithLocal(target)) return;
 
      MEMORY_BASIC_INFORMATION mbi = {};
