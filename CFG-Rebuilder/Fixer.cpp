@@ -185,8 +185,8 @@ void Fixer::FixupOneFunction(uintptr_t origAddr, const LiftedFunction& fn)
 
                     if (immSize == 1) {
                          if (diff < -128 || diff > 127) {
-                              printf("[!] rel8 out of range at func 0x%llx+0x%zx\n",
-                                   (unsigned long long)origAddr, offset);
+                              printf("[!] rel8 out of range at func 0x%llx+0x%zx , diff %llx\n",
+                                   (unsigned long long)origAddr, offset, diff);
                               break;
                          }
                          code[offset + immOffset] = (uint8_t)(int8_t)diff;

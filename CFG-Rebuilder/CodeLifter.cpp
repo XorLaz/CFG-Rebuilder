@@ -10,13 +10,14 @@ namespace {
 }
 
 
-// 构造 / 析构
 CodeLifter::CodeLifter(uint32_t targetPid)
      : m_mem(targetPid)
      , m_resolver(m_mem)
+     , m_pdata(m_mem)
      , m_arena(ARENA_RESERVE_SIZE, COMMIT_CHUNK_SIZE)
-     , m_scanner(m_mem)
+     , m_scanner(m_mem, m_pdata)
 {
+     // 模块列表用于共享 DLL 判断（ModuleResolver 仍然需要）
      if (!m_resolver.LoadModules()) {
           printf("[!] Failed to load target modules\n");
      }
@@ -31,6 +32,7 @@ CodeLifter::CodeLifter(uint32_t targetPid)
      );
 }
 
+
 CodeLifter::~CodeLifter()
 {
      for (auto& kv : m_mirrorVariables)   _aligned_free(kv.second);
@@ -39,13 +41,20 @@ CodeLifter::~CodeLifter()
 
 
 // 主入口
-bool CodeLifter::CollectFunction(uintptr_t targetFuncAddr, size_t hintSize)
+bool CodeLifter::CollectFunction(uintptr_t targetFuncAddr,
+     size_t hintSize,
+     bool stopAtFirstRet)
 {
+     m_stopAtFirstRet = stopAtFirstRet;
+
      if (hintSize > 0) {
           printf("[+] Using manual size hint: %zu bytes\n", hintSize);
           CollectOneWithSize(targetFuncAddr, hintSize, 0);
      }
      else {
+          if (stopAtFirstRet) {
+               printf("[+] Mode: stop at first ret\n");
+          }
           m_workQueue.push({ targetFuncAddr, 0 });
           m_enqueuedAddresses[targetFuncAddr] = true;
      }
@@ -108,7 +117,8 @@ void CodeLifter::CollectOne(uintptr_t addr, int depth)
           return;
      }
 
-     uintptr_t funcEnd = m_scanner.FindFunctionEnd(addr);
+     // 传入 m_stopAtFirstRet 标志
+     uintptr_t funcEnd = m_scanner.FindFunctionEnd(addr, m_stopAtFirstRet);
      if (funcEnd <= addr) return;
 
      size_t funcSize = funcEnd - addr;

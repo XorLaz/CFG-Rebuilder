@@ -6,15 +6,18 @@
 
 #include "MemoryAccess.h"
 #include "ModuleResolver.h"
+#include "PdataResolver.h"
 #include "ArenaAllocator.h"
 #include "FunctionScanner.h"
 #include "Fixer.h"
 
+// 已搬运函数的元数据
 struct LiftedFunction {
      void* localAddress;
      size_t size;
 };
 
+// CodeLifter 主类，协调各组件完成搬运 + 修复
 class CodeLifter {
 public:
      explicit CodeLifter(uint32_t targetPid);
@@ -23,17 +26,20 @@ public:
      CodeLifter(const CodeLifter&) = delete;
      CodeLifter& operator=(const CodeLifter&) = delete;
 
-     // 主入口（hintSize 为 0 时自动识别函数大小）
-     bool CollectFunction(uintptr_t targetFuncAddr, size_t hintSize = 0);
+     // 主入口
+     // hintSize > 0 时跳过自动识别，用指定大小搬运入口函数
+     // stopAtFirstRet 用于启发式扫描的激进模式
+     bool CollectFunction(uintptr_t targetFuncAddr,
+          size_t hintSize = 0,
+          bool stopAtFirstRet = false);
 
      void DumpResult() const;
-
      void SyncMirrors();
      void SyncIndirectSlots();
-
      void* GetLocalFunction(uintptr_t origAddr) const;
 
 public:
+     // 工作队列项
      struct WorkItem {
           uintptr_t addr;
           int       depth;
@@ -41,6 +47,7 @@ public:
 
      MemoryAccess    m_mem;
      ModuleResolver  m_resolver;
+     PdataResolver   m_pdata;
      ArenaAllocator  m_arena;
      FunctionScanner m_scanner;
      std::unique_ptr<Fixer> m_fixer;
@@ -51,6 +58,8 @@ public:
 
      std::queue<WorkItem> m_workQueue;
      std::unordered_map<uintptr_t, bool> m_enqueuedAddresses;
+
+     bool m_stopAtFirstRet = false;
 
 private:
      void ProcessWorkQueue();

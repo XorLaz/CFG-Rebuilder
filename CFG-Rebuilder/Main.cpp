@@ -9,13 +9,13 @@ int main()
           return 1;
      }
 
-     uint32_t pid = 0x1c8c;
+     uint32_t pid = 0x9994;
      CodeLifter lifter(pid);
 
-     uintptr_t targetFunc = 0x14372DE80;
-     size_t hintSize = 0x4A;
+     uintptr_t targetFunc = 0x7FF7F7340FD0;
+     size_t hintSize = 0x71E;
 
-     if (!lifter.CollectFunction(targetFunc, hintSize)) {
+     if (!lifter.CollectFunction(targetFunc, hintSize, true)) {
           printf("Lift failed\n");
           drv.UnDriver();
           return 1;

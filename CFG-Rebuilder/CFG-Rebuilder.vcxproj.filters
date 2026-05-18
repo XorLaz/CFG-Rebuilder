@@ -132,6 +132,9 @@
     <ClCompile Include="Fixer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="PdataResolver.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Zycore\API\Memory.h">
@@ -300,6 +303,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="FunctionScanner.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PdataResolver.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
