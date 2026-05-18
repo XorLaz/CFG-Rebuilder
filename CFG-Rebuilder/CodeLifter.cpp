@@ -7,6 +7,7 @@ namespace {
      constexpr size_t ARENA_RESERVE_SIZE = 1ULL * 1024 * 1024 * 1024;  // 1GB
      constexpr size_t COMMIT_CHUNK_SIZE = 16 * 1024 * 1024;            // 16MB
      constexpr size_t MAX_FUNCTION_SIZE = 65536;
+     constexpr size_t TRAMPOLINE_PER_FUNC = 64;   // 每个函数都他妈预留 64 字节
 }
 
 
@@ -117,7 +118,6 @@ void CodeLifter::CollectOne(uintptr_t addr, int depth)
           return;
      }
 
-     // 传入 m_stopAtFirstRet 标志
      uintptr_t funcEnd = m_scanner.FindFunctionEnd(addr, m_stopAtFirstRet);
      if (funcEnd <= addr) return;
 
@@ -128,20 +128,31 @@ void CodeLifter::CollectOne(uintptr_t addr, int depth)
           return;
      }
 
-     void* localCode = m_arena.Allocate(funcSize);
-     if (!localCode) return;
+     // 多分配 trampoline 空间，紧挨着函数末尾
+     void* block = m_arena.Allocate(funcSize + TRAMPOLINE_PER_FUNC);
+     if (!block) return;
 
-     if (!m_mem.Read(addr, localCode, funcSize)) {
+     if (!m_mem.Read(addr, block, funcSize)) {
           printf("[!] Failed to read at 0x%llx\n", (unsigned long long)addr);
           return;
      }
 
-     m_liftedFunctions[addr] = { localCode, funcSize };
+     // trampoline 区填 CC，便于调试时识别误执行
+     memset((uint8_t*)block + funcSize, 0xCC, TRAMPOLINE_PER_FUNC);
+
+     LiftedFunction fn;
+     fn.localAddress = block;
+     fn.size = funcSize;
+     fn.trampolineArea = (uint8_t*)block + funcSize;
+     fn.trampolineUsed = 0;
+     fn.trampolineCapacity = TRAMPOLINE_PER_FUNC;
+
+     m_liftedFunctions[addr] = fn;
 
      printf("[+] Collected 0x%llx -> %p (size=%zu, depth=%d)\n",
-          (unsigned long long)addr, localCode, funcSize, depth);
+          (unsigned long long)addr, block, funcSize, depth);
 
-     ScanInstructions(addr, localCode, funcSize, depth);
+     ScanInstructions(addr, block, funcSize, depth);
 }
 
 
@@ -163,20 +174,29 @@ void CodeLifter::CollectOneWithSize(uintptr_t addr, size_t funcSize, int depth)
           return;
      }
 
-     void* localCode = m_arena.Allocate(funcSize);
-     if (!localCode) return;
+     void* block = m_arena.Allocate(funcSize + TRAMPOLINE_PER_FUNC);
+     if (!block) return;
 
-     if (!m_mem.Read(addr, localCode, funcSize)) {
+     if (!m_mem.Read(addr, block, funcSize)) {
           printf("[!] Failed to read at 0x%llx\n", (unsigned long long)addr);
           return;
      }
 
-     m_liftedFunctions[addr] = { localCode, funcSize };
+     memset((uint8_t*)block + funcSize, 0xCC, TRAMPOLINE_PER_FUNC);
+
+     LiftedFunction fn;
+     fn.localAddress = block;
+     fn.size = funcSize;
+     fn.trampolineArea = (uint8_t*)block + funcSize;
+     fn.trampolineUsed = 0;
+     fn.trampolineCapacity = TRAMPOLINE_PER_FUNC;
+
+     m_liftedFunctions[addr] = fn;
 
      printf("[+] Collected (manual) 0x%llx -> %p (size=%zu, depth=%d)\n",
-          (unsigned long long)addr, localCode, funcSize, depth);
+          (unsigned long long)addr, block, funcSize, depth);
 
-     ScanInstructions(addr, localCode, funcSize, depth);
+     ScanInstructions(addr, block, funcSize, depth);
 }
 
 

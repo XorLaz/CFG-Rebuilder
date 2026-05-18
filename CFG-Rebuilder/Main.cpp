@@ -9,11 +9,11 @@ int main()
           return 1;
      }
 
-     uint32_t pid = 0x9994;
+     uint32_t pid = 0x485C;
      CodeLifter lifter(pid);
 
-     uintptr_t targetFunc = 0x7FF7F7340FD0;
-     size_t hintSize = 0x71E;
+     uintptr_t targetFunc = 0x7FF73D851100;
+     size_t hintSize = 0x51;
 
      if (!lifter.CollectFunction(targetFunc, hintSize, true)) {
           printf("Lift failed\n");
@@ -36,8 +36,10 @@ int main()
      lifter.SyncMirrors();
      lifter.SyncIndirectSlots();
 
-     //uint32_t result = decrypt(0xAAAA);
-     //printf("Result: 0x%x\n", result);
+     Sleep(15000);
+
+     uint32_t result = decrypt(0x12345);
+     printf("Result: 0x%x\n", result);
 
      drv.UnDriver();
      system("pause");

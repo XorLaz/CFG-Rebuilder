@@ -43,7 +43,6 @@ void Fixer::FixupAll(uint8_t* arenaBase, size_t arenaUsed)
      FlushInstructionCache(GetCurrentProcess(), arenaBase, arenaUsed);
      printf("====================================\n");
 }
-
 uintptr_t Fixer::ResolveTarget(uintptr_t origAddr)
 {
      auto it1 = m_liftedFunctions.find(origAddr);
@@ -90,7 +89,7 @@ void Fixer::FillIndirectSlot(uintptr_t origPtrAddr, void* localSlot)
      }
 }
 
-void Fixer::FixupOneFunction(uintptr_t origAddr, const LiftedFunction& fn)
+void Fixer::FixupOneFunction(uintptr_t origAddr, LiftedFunction& fn)
 {
      uint8_t* code = (uint8_t*)fn.localAddress;
      size_t offset = 0;
@@ -185,11 +184,47 @@ void Fixer::FixupOneFunction(uintptr_t origAddr, const LiftedFunction& fn)
 
                     if (immSize == 1) {
                          if (diff < -128 || diff > 127) {
-                              printf("[!] rel8 out of range at func 0x%llx+0x%zx , diff %llx\n",
-                                   (unsigned long long)origAddr, offset, diff);
-                              break;
+                              // rel8 装不下，在 trampoline 区写一条 jmp rel32 中转
+                              if (fn.trampolineUsed + 5 > fn.trampolineCapacity) {
+                                   printf("[!] Trampoline exhausted at func 0x%llx+0x%zx\n",
+                                        (unsigned long long)origAddr, offset);
+                                   break;
+                              }
+
+                              uint8_t* tramp = (uint8_t*)fn.trampolineArea + fn.trampolineUsed;
+                              uintptr_t trampAddr = (uintptr_t)tramp;
+
+                              // trampoline: E9 rel32 跳到真实目标
+                              int64_t trampDiff = (int64_t)localTarget - (int64_t)(trampAddr + 5);
+                              if (trampDiff < INT32_MIN || trampDiff > INT32_MAX) {
+                                   printf("[!] Trampoline target out of rel32 range\n");
+                                   break;
+                              }
+
+                              tramp[0] = 0xE9;
+                              int32_t trampRel32 = (int32_t)trampDiff;
+                              memcpy(tramp + 1, &trampRel32, 4);
+
+                              fn.trampolineUsed += 5;
+
+                              // 把原 jcc 改成跳向 trampoline
+                              int64_t newDiff = (int64_t)trampAddr - (int64_t)localNextRip;
+                              if (newDiff < -128 || newDiff > 127) {
+                                   printf("[!] Even trampoline out of rel8 range at func 0x%llx+0x%zx, "
+                                        "newDiff=%lld\n",
+                                        (unsigned long long)origAddr, offset, (long long)newDiff);
+                                   break;
+                              }
+
+                              code[offset + immOffset] = (uint8_t)(int8_t)newDiff;
+
+                              printf("[+] Inserted trampoline at %p for jcc at 0x%llx+0x%zx -> 0x%llx\n",
+                                   tramp, (unsigned long long)origAddr, offset,
+                                   (unsigned long long)localTarget);
                          }
-                         code[offset + immOffset] = (uint8_t)(int8_t)diff;
+                         else {
+                              code[offset + immOffset] = (uint8_t)(int8_t)diff;
+                         }
                     }
                     else if (immSize == 4) {
                          if (diff < INT32_MIN || diff > INT32_MAX) {

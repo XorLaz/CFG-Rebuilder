@@ -15,6 +15,9 @@
 struct LiftedFunction {
      void* localAddress;
      size_t size;
+     void* trampolineArea;       // 紧挨着函数末尾的 trampoline 区
+     size_t trampolineUsed;       // 已用 trampoline 字节
+     size_t trampolineCapacity;   // 总容量
 };
 
 // CodeLifter 主类，协调各组件完成搬运 + 修复

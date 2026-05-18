@@ -20,7 +20,7 @@ public:
      void FillIndirectSlot(uintptr_t origPtrAddr, void* localSlot);
 
 private:
-     void      FixupOneFunction(uintptr_t origAddr, const LiftedFunction& fn);
+     void FixupOneFunction(uintptr_t origAddr,LiftedFunction& fn);
      uintptr_t ResolveTarget(uintptr_t origAddr);
 
      MemoryAccess& m_mem;
