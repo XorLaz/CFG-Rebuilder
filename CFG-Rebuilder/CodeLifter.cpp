@@ -86,7 +86,7 @@ void CodeLifter::ProcessWorkQueue()
                     processed, m_workQueue.size());
           }
      }
-     printf("[*] Total processed: %zu functions\n", processed);
+     printf("[*] Total processed: %zu functions\n\n\n\n", processed);
 }
 
 void CodeLifter::EnqueueIfNeeded(uintptr_t addr, int depth)
@@ -336,6 +336,8 @@ void CodeLifter::SyncMirrors()
      for (auto& kv : m_mirrorVariables) {
           m_mem.Read(kv.first, kv.second, 32);
      }
+     // 同步完后重新 patch 函数指针
+     m_fixer->PatchMirrorPointers();
 }
 
 void CodeLifter::SyncIndirectSlots()
@@ -356,27 +358,13 @@ void* CodeLifter::GetLocalFunction(uintptr_t origAddr) const
 // 打印结果
 void CodeLifter::DumpResult() const
 {
-     printf("\n========== Phase 1 Result ==========\n");
+
      printf("Lifted functions: %zu\n", m_liftedFunctions.size());
-
-     size_t count = 0;
-     for (const auto& kv : m_liftedFunctions) {
-          if (count >= 20) {
-               printf("  ... and %zu more\n", m_liftedFunctions.size() - 20);
-               break;
-          }
-          printf("  0x%llx -> %p (size=%zu)\n",
-               (unsigned long long)kv.first,
-               kv.second.localAddress,
-               kv.second.size);
-          count++;
-     }
-
-     printf("\nMirror variables: %zu\n", m_mirrorVariables.size());
+     printf("Mirror variables: %zu\n", m_mirrorVariables.size());
      printf("Indirect call slots: %zu\n", m_indirectCallSlots.size());
-     printf("\nArena: %zu used, %zu MB committed, %zu MB reserved\n",
+     printf("Arena: %zu used, %zu MB committed, %zu MB reserved\n",
           m_arena.GetUsed(),
           m_arena.GetCommitted() / (1024 * 1024),
           m_arena.GetCapacity() / (1024 * 1024));
-     printf("====================================\n");
+
 }

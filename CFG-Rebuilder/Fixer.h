@@ -18,8 +18,10 @@ public:
 
      void FixupAll(uint8_t* arenaBase, size_t arenaUsed);
      void FillIndirectSlot(uintptr_t origPtrAddr, void* localSlot);
+     void PatchMirrorPointers();
 
 private:
+
      void FixupOneFunction(uintptr_t origAddr,LiftedFunction& fn);
      uintptr_t ResolveTarget(uintptr_t origAddr);
 

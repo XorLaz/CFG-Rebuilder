@@ -4,16 +4,16 @@
 
 int main()
 {
-     if (!drv.Loaddriver("AXEW073O7Z3HJDNUFB4VU0")) {
+     if (!drv.Loaddriver("AXDL0GN47EAR73GT1KKPIL")) {
           printf("Driver load failed\n");
           return 1;
      }
 
-     uint32_t pid = 0x485C;
+     uint32_t pid = 0xEB4;
      CodeLifter lifter(pid);
 
-     uintptr_t targetFunc = 0x7FF73D851100;
-     size_t hintSize = 0x51;
+     uintptr_t targetFunc = 0x10FB40EE1;
+     size_t hintSize = 0x3DF;
 
      if (!lifter.CollectFunction(targetFunc, hintSize, true)) {
           printf("Lift failed\n");
@@ -36,10 +36,8 @@ int main()
      lifter.SyncMirrors();
      lifter.SyncIndirectSlots();
 
-     Sleep(15000);
-
-     uint32_t result = decrypt(0x12345);
-     printf("Result: 0x%x\n", result);
+     //uint32_t result = decrypt(0x12345);
+     //printf("Result: 0x%x\n", result);
 
      drv.UnDriver();
      system("pause");

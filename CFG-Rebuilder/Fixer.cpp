@@ -21,7 +21,6 @@ Fixer::Fixer(MemoryAccess& mem,
 
 void Fixer::FixupAll(uint8_t* arenaBase, size_t arenaUsed)
 {
-     printf("\n========== Phase 2: Fixup ==========\n");
 
      size_t filledSlots = 0;
      for (auto& kv : m_indirectCallSlots) {
@@ -40,8 +39,10 @@ void Fixer::FixupAll(uint8_t* arenaBase, size_t arenaUsed)
      }
      printf("[+] Total fixed: %zu functions\n", fixedFuncs);
 
+     PatchMirrorPointers();
+
      FlushInstructionCache(GetCurrentProcess(), arenaBase, arenaUsed);
-     printf("====================================\n");
+
 }
 uintptr_t Fixer::ResolveTarget(uintptr_t origAddr)
 {
@@ -245,4 +246,38 @@ void Fixer::FixupOneFunction(uintptr_t origAddr, LiftedFunction& fn)
 
           offset += insn.length;
      }
+}
+
+void Fixer::PatchMirrorPointers()
+{
+     printf("\n[*] Patching function pointers in mirror variables...\n");
+
+     constexpr size_t SCAN_SIZE = 32;
+     size_t patched = 0;
+
+     for (auto& kv : m_mirrorVariables) {
+          uintptr_t origAddr = kv.first;
+          uint8_t* mirror = (uint8_t*)kv.second;
+
+          for (size_t off = 0; off + 8 <= SCAN_SIZE; off += 8) {
+               uintptr_t value = 0;
+               memcpy(&value, mirror + off, 8);
+
+               if (value == 0) continue;
+
+               auto it = m_liftedFunctions.find(value);
+               if (it != m_liftedFunctions.end()) {
+                    uintptr_t localAddr = (uintptr_t)it->second.localAddress;
+                    memcpy(mirror + off, &localAddr, 8);
+
+                    printf("[+] Patched mirror at 0x%llx+0x%zx: 0x%llx -> 0x%llx\n",
+                         (unsigned long long)origAddr, off,
+                         (unsigned long long)value,
+                         (unsigned long long)localAddr);
+                    patched++;
+               }
+          }
+     }
+
+     printf("[+] Patched %zu function pointers in mirrors\n", patched);
 }
