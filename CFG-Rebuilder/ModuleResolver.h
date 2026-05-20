@@ -16,11 +16,11 @@ public:
      explicit ModuleResolver(MemoryAccess& mem);
 
      bool LoadModules();
-     const Module* FindModule(uintptr_t addr) const;
      bool IsSharedWithLocal(uintptr_t addrInTarget) const;
-     size_t GetModuleCount() const { return m_modules.size(); }
+     size_t GetModuleCount() const { return m_localModuleBases.size(); }
 
 private:
      MemoryAccess& m_mem;
-     std::vector<Module> m_modules;
+     std::vector<uintptr_t> m_localModuleBases;   // 改名为本地模块基址列表
+
 };

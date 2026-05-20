@@ -8,101 +8,50 @@
 
 #pragma comment(lib, "Psapi.lib")
 
-namespace {
-     const char* TRUSTED_SHARED_MODULES[] = {
-         "ntdll.dll",
-         "kernel32.dll",
-         "kernelbase.dll",
-         "user32.dll",
-         "gdi32.dll",
-         "advapi32.dll",
-         "ws2_32.dll",
-         "ole32.dll",
-         "oleaut32.dll",
-         "shell32.dll",
-         "rpcrt4.dll",
-         "sechost.dll",
-         "win32u.dll",
-         "combase.dll",
-         "ucrtbase.dll",
-         "vcruntime140.dll",
-         "msvcp140.dll",
-     };
-
-     std::string ToLowerString(const char* s) {
-          std::string r(s);
-          std::transform(r.begin(), r.end(), r.begin(),
-               [](unsigned char c) { return (char)std::tolower(c); });
-          return r;
-     }
-
-     std::string ExtractFileName(const char* path) {
-          const char* p = strrchr(path, '\\');
-          return ToLowerString(p ? (p + 1) : path);
-     }
-}
-
 ModuleResolver::ModuleResolver(MemoryAccess& mem)
      : m_mem(mem)
 {}
 
 bool ModuleResolver::LoadModules()
 {
-     HANDLE hSnap = CreateToolhelp32Snapshot(
-          TH32CS_SNAPMODULE | TH32CS_SNAPMODULE32, m_mem.GetPid());
-
-     if (hSnap == INVALID_HANDLE_VALUE) {
-          printf("[!] CreateToolhelp32Snapshot failed: %lu\n", GetLastError());
+     // 加载本地进程的所有模块基址
+     // 系统 DLL（ntdll/kernel32 等）在所有进程的基址相同，
+     // 所以本地基址列表可以用来判断目标进程里的某个地址是不是共享模块
+     HMODULE modules[1024];
+     DWORD needed = 0;
+     if (!EnumProcessModules(GetCurrentProcess(), modules, sizeof(modules), &needed)) {
+          printf("[!] EnumProcessModules failed: %lu\n", GetLastError());
           return false;
      }
 
-     MODULEENTRY32W me = { sizeof(me) };
-     if (Module32FirstW(hSnap, &me)) {
-          do {
-               char buf[MAX_PATH] = { 0 };
-               WideCharToMultiByte(CP_ACP, 0, me.szModule, -1,
-                    buf, MAX_PATH, nullptr, nullptr);
-               Module m;
-               m.name = ToLowerString(buf);
-               m.base = (uintptr_t)me.modBaseAddr;
-               m.size = me.modBaseSize;
-               m_modules.push_back(m);
-          } while (Module32NextW(hSnap, &me));
+     size_t count = needed / sizeof(HMODULE);
+     m_localModuleBases.reserve(count);
+     for (size_t i = 0; i < count; i++) {
+          m_localModuleBases.push_back((uintptr_t)modules[i]);
      }
 
-     CloseHandle(hSnap);
-     return !m_modules.empty();
+     printf("[+] Loaded %zu local module bases\n", count);
+     return true;
 }
 
-const ModuleResolver::Module* ModuleResolver::FindModule(uintptr_t addr) const
-{
-     for (auto& m : m_modules) {
-          if (addr >= m.base && addr < m.base + m.size) {
-               return &m;
-          }
-     }
-     return nullptr;
-}
 
 bool ModuleResolver::IsSharedWithLocal(uintptr_t addrInTarget) const
 {
      if (addrInTarget == 0) return false;
 
-     const Module* mod = FindModule(addrInTarget);
-     if (!mod) return false;
+     // 用 VirtualQuery 拿目标地址所属模块的基址
+     MEMORY_BASIC_INFORMATION mbi = {};
+     if (!m_mem.Query(addrInTarget, &mbi)) return false;
 
-     bool trusted = false;
-     for (const char* t : TRUSTED_SHARED_MODULES) {
-          if (mod->name == t) {
-               trusted = true;
-               break;
+     uintptr_t targetBase = (uintptr_t)mbi.AllocationBase;
+     if (targetBase == 0) return false;
+
+     // 在本地模块基址列表里查，找到就是共享模块
+     for (uintptr_t localBase : m_localModuleBases) {
+          if (localBase == targetBase) {
+               return true;
           }
      }
-     if (!trusted) return false;
 
-     HMODULE hLocal = GetModuleHandleA(mod->name.c_str());
-     if (!hLocal) return false;
-     if ((uintptr_t)hLocal != mod->base) return false;
-
-     return true;
+     return false;
 }

@@ -30,14 +30,18 @@ int main()
           return 1;
      }
 
-     using SubFunc = uint32_t(*)(uint32_t);
+     using SubFunc = uint64_t(*)(uint64_t, uint64_t);
      SubFunc decrypt = (SubFunc)localAddr;
+
 
      lifter.SyncMirrors();
      lifter.SyncIndirectSlots();
 
-     //uint32_t result = decrypt(0x12345);
-     //printf("Result: 0x%x\n", result);
+     Sleep(12000);
+
+     uint64_t result = decrypt(0x8001000FC875BD5E,0xF000000000000);
+
+     printf("Result: 0x%x\n", result);
 
      drv.UnDriver();
      system("pause");
