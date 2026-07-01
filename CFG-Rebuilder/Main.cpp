@@ -1,23 +1,48 @@
 #include "CodeLifter.h"
-#include "driver.h"
 #include <cstdio>
+#include <cstring>
 
-int main()
+#ifdef USE_DRIVER
+#include "driver.h"
+#endif
+
+int main(int argc, char* argv[])
 {
-     if (!drv.Loaddriver("AXDL0GN47EAR73GT1KKPIL")) {
-          printf("Driver load failed\n");
-          return 1;
+     MemoryBackend backend = MemoryBackend::API;
+
+#ifdef USE_DRIVER
+     for (int i = 1; i < argc; i++) {
+          if (_stricmp(argv[i], "--driver") == 0) {
+               backend = MemoryBackend::Driver;
+               break;
+          }
      }
 
+     if (backend == MemoryBackend::Driver) {
+          if (!drv.Loaddriver("AXDL0GN47EAR73GT1KKPIL")) {
+               printf("Driver load failed\n");
+               return 1;
+          }
+          printf("[+] Using driver backend\n");
+     }
+     else {
+          printf("[+] Using API backend\n");
+     }
+#else
+     printf("[+] Using API backend\n");
+#endif
+
      uint32_t pid = 0xEB4;
-     CodeLifter lifter(pid);
+     CodeLifter lifter(pid, backend);
 
      uintptr_t targetFunc = 0x10FB40EE1;
      size_t hintSize = 0x3DF;
 
      if (!lifter.CollectFunction(targetFunc, hintSize, true)) {
           printf("Lift failed\n");
-          drv.UnDriver();
+#ifdef USE_DRIVER
+          if (backend == MemoryBackend::Driver) drv.UnDriver();
+#endif
           return 1;
      }
 
@@ -26,7 +51,9 @@ int main()
      void* localAddr = lifter.GetLocalFunction(targetFunc);
      if (!localAddr) {
           printf("Function not found\n");
-          drv.UnDriver();
+#ifdef USE_DRIVER
+          if (backend == MemoryBackend::Driver) drv.UnDriver();
+#endif
           return 1;
      }
 
@@ -43,7 +70,9 @@ int main()
 
      printf("Result: 0x%x\n", result);
 
-     drv.UnDriver();
+#ifdef USE_DRIVER
+     if (backend == MemoryBackend::Driver) drv.UnDriver();
+#endif
      system("pause");
      return 0;
 }
